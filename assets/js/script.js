@@ -78,19 +78,18 @@ $(".card .list-group").sortable({
   activate: function(event, ui) {
     $(this).addClass("dropover");
     $(this[".bottom-trash"]).addClass("bottom-trash-drag");
-    console.log(ui);
   },
   deactivate: function(event, ui) {
     $(this).removeClass("dropover");
-    console.log(ui);
+    $(".bottom-trash").removeClass("bottom-trash-drag");
   },
   over: function(event) {
-    console.log(event);
+    $(event.target).addClass("dropover-active");
   },
   out: function(event) {
-    console.log(event);
+    $(event.target).addClass("dropover-active");
   },
-  update: function(event) {
+  update: function() {
     var tempArr = [];
 
     $(this).children().each(function() {
@@ -113,24 +112,20 @@ $(".card .list-group").sortable({
     tasks[arrName] = tempArr;
     saveTasks();
   },
-  stop: function(event) {
-    $(this).removeClass("dropover");
-  }
 });
 
 $("#trash").droppable({
   accept: ".card .list-group-item",
   tolerance: "touch",
   drop: function(event,ui) {
-    ui.draggable.remove()
+    ui.draggable.remove();
+    $(".bottom-trash").removeClass("bottom-trash-active");
   },
   over: function(event, ui) {
-    $(this[".bottom-trash"]).addClass("bottom-trash-active");
-    console.log(ui);
+    $(".bottom-trash").addClass("bottom-trash-active");
   },
   out: function(event, ui) {
-    $(this[".bottom-trash"]).removeClass("bottom-trash-active");
-    console.log(ui);
+    $(".bottom-trash").removeClass("bottom-trash-active");
   }
 });
 
